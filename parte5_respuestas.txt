@@ -1,0 +1,31 @@
+================================================================================
+TALLER 03 — PARTE 5: RESPUESTAS TEÓRICAS Y ANÁLISIS
+================================================================================
+
+PREGUNTA 1:
+¿En qué se parece tu agente a un «agente basado en objetivos» clásico (PEAS) y en qué no? Señala en tu código dónde está el objetivo y quién decide que se cumplió.
+
+Respuesta:
+El agente se asemeja al modelo PEAS porque percibe su entorno mediante sensores (la pregunta del usuario y las observaciones devueltas por las herramientas), ejecuta acciones deliberadas mediante actuadores (consultas SQL y llamadas ReAct) y busca maximizar una medida de rendimiento (responder con exactitud factual). Se parece a un agente basado en objetivos clásico porque planifica secuencias dinámicas de acciones intermedias en función de una meta. Sin embargo, difiere radicalmente en que no utiliza un algoritmo de búsqueda determinista formal (como A* o STRIPS) sobre un espacio de estados discreto, sino inferencia probabilística neuronal. En el código (`agent.py`), el objetivo reside en el mensaje inicial del usuario dentro de `messages` (línea 151: `{"role": "user", "content": question}`) guiado por `SYSTEM_PROMPT`. Quien decide que el objetivo se cumplió es el propio modelo cuando emite la clave `{"final": "..."}` (línea 186), activando el corte del bucle con `status = "completed"`.
+
+(Total palabras: 147)
+
+--------------------------------------------------------------------------------
+
+PREGUNTA 2:
+Con tu resultados.csv: compara tokens de entrada y pasos de tu agente contra el de ejemplo. Si duplicaras el máximo de pasos, ¿qué pasaría con el presupuesto de tokens en el peor caso? ¿Por qué no se duplica? Usa tus cifras.
+
+Respuesta:
+En el agente de ejemplo (`parte0.csv`), el modelo no tenía catálogo de herramientas: P1 dio 0 pasos y P3 agotó 3 pasos con 3 errores sin métricas de tokens. En contraste, en `resultados.csv` nuestro agente promedió 3,0 pasos por pregunta (24 pasos totales en el golden set) y consumió 32.266 tokens de entrada totales (~4.033 tokens promedio por pregunta, con un máximo de 6.180 en G5). Si duplicáramos el límite de pasos de 8 a 16, en el peor caso el presupuesto de tokens no se duplicaría, sino que crecería de forma cuadrática (orden O(N²)). Esto ocurre porque la API de OpenAI es stateless: en cada paso se reenvía la totalidad del historial acumulado (prompt del sistema, preguntas, llamadas previas y tablas devueltas). Con nuestras cifras, una corrida que consumió ~5.000 tokens en 4 pasos consumiría más de 22.000 tokens si agota 16 pasos consecutivos.
+
+(Total palabras: 149)
+
+--------------------------------------------------------------------------------
+
+PREGUNTA 3:
+Describe un caso en que tu agente, en producción, causaría un daño real. ¿Qué protección pondrías en el código del servidor y qué decisión dejarías a una persona? Usa lo que viste en la 0.b y la 0.c.
+
+Respuesta:
+En producción (por ejemplo, en un sistema clínico o financiero), el agente podría causar un daño severo si un usuario ejecuta una inyección adversaria como en 0.b (`SELECT 1; DROP TABLE pacientes`) o explota un path traversal como en 0.c para sobreescribir archivos críticos fuera del entorno (`../sistema/config.json`). Si el agente tuviera privilegios de escritura o generara sentencias no filtradas, destruiría datos maestros o filtraría registros confidenciales al exterior. Como protección en el servidor implementaría: 1) Conexión inmutable de solo lectura en el motor de base de datos (`mode=ro`), impidiendo cualquier mutación a nivel del kernel/filesystem; 2) Forzado de límites de filas y almacenamiento exclusivo en rutas fijas aisladas con nombres únicos (UUID). Dejaría a una persona (Human-in-the-Loop) la autorización final e irreversible ante cualquier exportación masiva de datos o cualquier operación que modifique el estado de la base de datos.
+
+(Total palabras: 148)
