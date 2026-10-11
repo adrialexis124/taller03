@@ -1,0 +1,6 @@
+id,tipo,estado,pasos,llamadas_herramienta,errores_herramienta,excepcion,tokens_entrada,tokens_salida,segundos,esperado,acierto,abstencion,base_intacta,modelo,respuesta
+P1,simple,completed,0,0,0,,,,6.19,845520.02,False,False,True,,"No puedo determinar el importe total vendido en marzo de 2026: en esta conversación no tengo conectada ninguna fuente de datos de ventas (ni archivo, ni base de datos) y no dispongo de un catálogo de tools con el cual consultarla. Siguiendo la regla de no inventar datos, no puedo ofrecer una cifra. Para poder calcularlo, indícame la fuente de datos (por ejemplo, un archivo CSV/Excel con columnas c"
+P3,multi,completed,3,3,3,,,,8.08,2235879.55,False,False,True,,"No puedo responder la pregunta porque no tengo acceso a ninguna herramienta registrada en este entorno: intenté consultar los datos de ventas con las herramientas 'read_data', 'leer_datos' y 'get_data', y todas devolvieron el error 'Tool no registrada'.
+
+Supuestos y limitaciones:
+- No existe evidencia disponible sobre la facturación por categoría de producto en el primer semestre de 2026 (01/01/20"

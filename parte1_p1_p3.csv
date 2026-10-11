@@ -1,0 +1,14 @@
+id,tipo,estado,pasos,llamadas_herramienta,errores_herramienta,excepcion,tokens_entrada,tokens_salida,segundos,esperado,acierto,abstencion,base_intacta,modelo,respuesta
+P1,simple,completed,3,2,0,,3847,629,9.54,845520.02,True,False,True,zai-org/GLM-5.3-Flash,"El importe total vendido en marzo de 2026 fue de **845.520,02** (importe neto, tras aplicar descuentos), correspondiente a 360 ventas registradas en ese mes.
+
+Desglose:
+- Importe bruto (sin descuentos): 891.940,06
+- Descuentos aplicados: 46.420,04
+- Importe neto total: 845.520,02
+
+Cálculo realizado sobre la tabla 'ventas' con la fórmula: SUM(cantidad × precio_unitario × (1 - descuento)) para las f"
+P3,multi,completed,3,2,0,,3963,714,3.37,2235879.55,True,False,True,zai-org/GLM-5.3-Flash,"En el primer semestre de 2026 (del 01/01/2026 al 30/06/2026), la categoría de producto que más facturó fue **licencia**, con una facturación total de **2.235.879,55** (calculada como cantidad × precio unitario, ajustada por descuento, en 817 ventas).
+
+Para contexto, el ranking completo de facturación por categoría fue:
+1. **licencia**: 2.235.879,55 (817 ventas)
+2. **soporte**: 1.103.754,18 (486 ve"

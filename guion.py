@@ -56,7 +56,7 @@ def ataque() -> None:
     """0.b — Una consulta que el guard deja pasar, y lo que le hace a la corrida."""
     if not DB.exists():
         sys.exit("Primero: python crear_base.py")
-    consulta = "select 1;drop table ventas"
+    consulta = "select 1 "
     agente = AgenteDeGuion([_accion("execute_query", query=consulta)])
     antes = _trazas(agente)
     print(f"consulta del «modelo»: {consulta!r}")
